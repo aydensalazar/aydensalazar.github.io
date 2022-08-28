@@ -15,11 +15,13 @@ I love meeting new people! Feel free to reach out for anything whatsoever at ayd
 ![Research Paper](assets/vid/mosquito_gene_drive.gif)
 
 <br />
+<br />
 
 ## [Particle Swarm Optimization for Mosquito Trap Placement](https://github.com/Chipdelmal/MGSurvE/blob/main/MGSurvE/optimizationPSO.py)
 
 ![Mosquito Trap Placement](assets/img/MGSurvE_logo.jpeg)
 
+<br />
 <br />
 
 ## [Predicting Number of Solar Panels For U.S Counties](https://github.com/aydensalazar/usa-solar-panel-prediction/blob/master/ER%20131%20Final%20Project%20Group%202-1.ipynb)
@@ -27,11 +29,13 @@ I love meeting new people! Feel free to reach out for anything whatsoever at ayd
 ![USA Interactive Map](assets/vid/solar_panel_1.gif)
 
 <br />
+<br />
 
 ## [Online Interactive Berkeley Crime Heat Map](https://medium.com/codex/how-i-deployed-a-crime-heatmap-application-using-python-flask-and-heroku-48b9dfb5362f)
 
 ![Crime Heat Map](assets/img/heatmap.png)
 
+<br />
 <br />
 
 ## [Build-Your-Own COVID-19 SEIRD Epidemic Model](https://github.com/aydensalazar/covid19seirdproject)
