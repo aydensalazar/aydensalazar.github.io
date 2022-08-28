@@ -40,6 +40,16 @@ I love meeting new people! Feel free to reach out for anything whatsoever at ayd
 
 ## [Build-Your-Own COVID-19 SEIRD Epidemic Model](https://github.com/aydensalazar/covid19seirdproject)
 
-![USA Interactive Map](assets/img/covid_seird_plot.png)
+![SEIRD Model](assets/img/covid_seird_plot.png)
+
+<br />
+<br />
+
+## [Baseball Pitch Type Prediction](https://github.com/aydensalazar/baseball-pitch-prediction)
+
+![Baseball](assets/vid/baseball.gif)
+
+<br />
+<br />
 
 ### [Check out my entire GitHub here](https://github.com/aydensalazar/)
