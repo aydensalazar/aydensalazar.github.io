@@ -18,9 +18,20 @@ I love meeting new people! Feel free to reach out for anything whatsoever at ayd
 
 ![Mosquito Trap Placement](assets/img/MGSurvE_logo.jpeg)
 
-## [Predicting Number of Solar Panels For U.S Counties](https://github.com/Chipdelmal/MGSurvE/blob/main/MGSurvE/optimizationPSO.py)
+## [Predicting Number of Solar Panels For U.S Counties](https://github.com/aydensalazar/usa-solar-panel-prediction/blob/master/ER%20131%20Final%20Project%20Group%202-1.ipynb)
 
 ![USA Interactive Map](assets/vid/solar_panel_1.gif)
+
+## [Online Interactive Berkeley Crime Heat Map](https://medium.com/codex/how-i-deployed-a-crime-heatmap-application-using-python-flask-and-heroku-48b9dfb5362f)
+
+![Crime Heat Map](assets/img/heatmap.png)
+
+## [Build-Your-Own COVID-19 SEIRD Epidemic Model](https://github.com/aydensalazar/covid19seirdproject)
+
+![USA Interactive Map](assets/img/covid_seird.png)
+
+
+
 
 
 
