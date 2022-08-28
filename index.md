@@ -28,7 +28,7 @@ I love meeting new people! Feel free to reach out for anything whatsoever at ayd
 
 ## [Build-Your-Own COVID-19 SEIRD Epidemic Model](https://github.com/aydensalazar/covid19seirdproject)
 
-![USA Interactive Map](assets/img/covid_seird.png)
+![USA Interactive Map](assets/img/covid_seird_plot.png)
 
 
 
