@@ -12,35 +12,17 @@ I love meeting new people! Feel free to reach out for anything whatsoever at ayd
 
 ## [Predicting Summary Statistics For Mosquito Gene Drive Using Deep Learning](https://github.com/Chipdelmal/MoNeT_ML/blob/main/DSDP/STP/AydenSalazar/AydenSalazarMarkdownReport.md)
 
-<<<<<<< HEAD
 ![Research Paper](assets/vid/mosquito_gene_drive.gif)
-=======
-<<<<<<< HEAD
-![Research Paper](assets/vid/mosquito_gene_drive.gif)
-=======
-![Mosquito Trap Placement](assets/vid/mosquito_gene_drive.gif)
-
-yee 2
->>>>>>> c3877637fd5b1d7faebce02267df5b8371a8c004
->>>>>>> e82e98a224a0fcde210b3bd3b9a950c9bd2a2b66
 
 ## [Particle Swarm Optimization for Mosquito Trap Placement](https://github.com/Chipdelmal/MGSurvE/blob/main/MGSurvE/optimizationPSO.py)
 
 ![Mosquito Trap Placement](assets/img/MGSurvE_logo.jpeg)
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> e82e98a224a0fcde210b3bd3b9a950c9bd2a2b66
 ## [Predicting Number of Solar Panels For U.S Counties](https://github.com/Chipdelmal/MGSurvE/blob/main/MGSurvE/optimizationPSO.py)
 
 ![USA Interactive Map](assets/vid/solar_panel_1.gif)
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> c3877637fd5b1d7faebce02267df5b8371a8c004
->>>>>>> e82e98a224a0fcde210b3bd3b9a950c9bd2a2b66
+
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
