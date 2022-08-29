@@ -8,6 +8,8 @@ Hello, my name is Ayden Salazar and I'm a senior studying Data Science at the Un
 
 I love meeting new people! Feel free to reach out for anything whatsoever at aydensalazar09@gmail.com.
 
+### [Click here to view my resume](https://drive.google.com/file/d/1S8EOuKMbzOzMf7qN8aq9K0rTQvsATnqN/view?usp=sharing)
+
 # Noteworthy Projects
 
 ## [Predicting Summary Statistics For Mosquito Gene Drive Using Deep Learning](https://github.com/Chipdelmal/MoNeT_ML/blob/main/DSDP/STP/AydenSalazar/AydenSalazarMarkdownReport.md)
