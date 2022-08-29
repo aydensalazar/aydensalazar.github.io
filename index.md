@@ -6,9 +6,9 @@ layout: default
 
 Hello, my name is Ayden Salazar and I'm a senior studying Data Science at the University of California, Berkeley with an expected graduation date of December, 2022. I have a passion for finding data-driven solutions to real-world problems, especially in the context of public health and epidemiology. When I'm not geeking out over a Data Science project, you can find me leading runs as president of UC Berkeley's Running Club, making short films with friends, and going on hiking adventures.
 
-I love meeting new people! Feel free to reach out for anything whatsoever at aydensalazar09@gmail.com.
-
 ### [Click here to view my resume](https://drive.google.com/file/d/1S8EOuKMbzOzMf7qN8aq9K0rTQvsATnqN/view?usp=sharing)
+
+I love meeting new people! Feel free to reach out for anything whatsoever at aydensalazar09@gmail.com.
 
 # Noteworthy Projects
 
