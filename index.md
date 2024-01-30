@@ -4,13 +4,22 @@ layout: default
 
 # About Me
 
-Hello, my name is Ayden Salazar and I'm a Data Scientist with a passion for finding data-driven solutions to real-world problems, especially in the context of public health and epidemiology. I received my B.A. in Data Science at UC Berkeley in 2022 and currently work as a Data Scientist for IBM in San Francisco. When I'm not geeking out over a data science project, you can find me running, making short films with friends, and going on hiking adventures.
+Hello, my name is Ayden Salazar and I'm a detail-oriented AI Engineer & Data Scientist with a proven track record in delivering impactful Data & AI solutions that drive successful business outcomes. I am well-versed in all phases of the Data & AI lifecycle, with a strong working knowledge of foundation models, large language models, and natural language processing. I am proficient in translating business requirements into data-driven applications. 
+
+I received my B.A. in Data Science at UC Berkeley in 2022 and currently work as an AI Engineer for IBM in San Francisco.
 
 ### [Click here to view my resume](https://drive.google.com/file/d/1S8EOuKMbzOzMf7qN8aq9K0rTQvsATnqN/view?usp=sharing)
 
-I love meeting new people! Feel free to reach out for anything whatsoever at aydensalazar09@gmail.com.
+I love meeting new people! Feel free to reach out for anything whatsoever at asalazar24@berkeley.edu
 
 # Noteworthy Projects
+
+## [Python Generative AI Video Creator for Youtube Channel](https://github.com/aydensalazar/gen-ai-storyteller)
+
+![Youtube Channel](assets/img/ai_youtube_channel.png)
+
+<br />
+<br />
 
 ## [Predicting Summary Statistics For Mosquito Gene Drive Using Deep Learning](https://github.com/Chipdelmal/MoNeT_ML/blob/main/DSDP/STP/AydenSalazar/AydenSalazarMarkdownReport.md)
 
