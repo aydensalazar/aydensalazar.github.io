@@ -4,7 +4,7 @@ layout: default
 
 # About Me
 
-Hello, my name is Ayden Salazar and I'm a detail-oriented AI Engineer & Data Scientist with a proven track record in delivering impactful Data & AI solutions that drive successful business outcomes. I am well-versed in all phases of the Data & AI lifecycle, with a strong working knowledge of foundation models, large language models, and natural language processing. I am proficient in translating business requirements into data-driven applications. 
+Hello, my name is Ayden Salazar and I am a detail-oriented AI Engineer & Data Scientist with a proven track record in delivering impactful Data & AI solutions that drive successful business outcomes. I am well-versed in all phases of the Data & AI lifecycle, with a strong working knowledge of foundation models, large language models, and natural language processing. I am proficient in translating business requirements into data-driven applications. 
 
 I received my B.A. in Data Science at UC Berkeley in 2022 and currently work as an AI Engineer for IBM in San Francisco.
 
