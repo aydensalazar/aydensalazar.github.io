@@ -8,7 +8,7 @@ Hello, my name is Ayden Salazar and I am a detail-oriented AI Engineer & Data Sc
 
 I received my B.A. in Data Science at UC Berkeley in 2022 and currently work as an AI Engineer for IBM in San Francisco.
 
-### [Click here to view my resume](https://drive.google.com/file/d/1ZTpaA831iz68_Y4EUP0bKHzqxlg6u1-P/view)
+### [Click here to view my resume](https://drive.google.com/file/d/1g03Ca_mnctVzrAW5HV9vIbgoxYXDSmpE/view?usp=sharing)
 
 I love meeting new people! Feel free to reach out for anything whatsoever at asalazar24@berkeley.edu
 
