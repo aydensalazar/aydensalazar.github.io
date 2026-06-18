@@ -1,17 +1,97 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
 
+const linkClass =
+  "text-stone-900 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-700 transition-colors";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <main
+    id="main"
+    class="mx-auto max-w-5xl px-6 py-14 sm:py-20 md:px-10 md:py-28"
+  >
+    <section
+      class="grid gap-12 md:grid-cols-[1.1fr_1fr] md:gap-16 md:items-center"
+    >
+      <div>
+        <h1
+          class="font-serif text-5xl sm:text-6xl lg:text-7xl font-light leading-[1.05] tracking-tight"
+        >
+          Ayden Salazar
+        </h1>
+        <p
+          class="mt-8 max-w-md text-lg sm:text-xl text-stone-700 leading-relaxed"
+        >
+          Hi, I'm Ayden, an engineer based in San Francisco. By day I work in
+          tech, and the rest of my time I spend making short films.
+        </p>
+      </div>
+      <div>
+        <img
+          src="/img/AydenSalazar-UCBerkeleyGrad-60.jpg"
+          alt="Ayden Salazar standing on the UC Berkeley campus in front of the Campanile"
+          width="2000"
+          height="3000"
+          class="w-full h-auto rounded-sm shadow-sm"
+          fetchpriority="high"
+        />
+      </div>
+    </section>
+
+    <section class="mt-24 md:mt-32 max-w-2xl">
+      <ul class="space-y-3 text-base sm:text-lg">
+        <li>
+          <a href="mailto:asalazar24@berkeley.edu" class={linkClass}>
+            asalazar24 [at] berkeley [dot] edu
+          </a>
+        </li>
+        <li class="text-stone-700">
+          Senior Solution Engineer @ Salesforce
+        </li>
+        <li class="flex flex-wrap gap-x-6 gap-y-2 pt-2">
+          <a
+            href="https://www.linkedin.com/in/ayden-salazar-27b576198/"
+            class={linkClass}
+            rel="noopener"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/aydensalazar"
+            class={linkClass}
+            rel="noopener"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://drive.google.com/file/d/1g03Ca_mnctVzrAW5HV9vIbgoxYXDSmpE/view?usp=sharing"
+            class={linkClass}
+            rel="noopener"
+          >
+            Resume
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="mt-24 md:mt-32 max-w-2xl">
+      <h2
+        class="font-serif text-3xl sm:text-4xl font-light tracking-tight"
+      >
+        Films
+      </h2>
+      <p
+        class="mt-5 text-base sm:text-lg text-stone-700 leading-relaxed"
+      >
+        Outside of work, I make short films &mdash; a creative outlet for the
+        side of me that loves storytelling, image, and sound.
+      </p>
+      <p class="mt-6">
+        <a href="/films" class={linkClass + " inline-flex items-center gap-1.5"}>
+          View my films
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </p>
+    </section>
+  </main>
+</BaseLayout>
