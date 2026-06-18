@@ -2,92 +2,182 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const linkClass =
-  "text-stone-900 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-700 transition-colors";
+  "text-ink underline decoration-ink-dim/60 underline-offset-4 hover:decoration-glow hover:text-glow-strong transition-colors";
 ---
 
 <BaseLayout>
   <main
     id="main"
-    class="mx-auto max-w-5xl px-6 py-14 sm:py-20 md:px-10 md:py-28"
+    class="mx-auto max-w-6xl px-6 py-14 sm:py-20 md:px-10 md:py-28"
   >
     <section
-      class="grid gap-12 md:grid-cols-[1.1fr_1fr] md:gap-16 md:items-center"
+      class="grid gap-12 md:grid-cols-[1.05fr_1fr] md:gap-16 md:items-center"
     >
-      <div>
+      <div class="max-w-xl">
         <h1
-          class="font-serif text-5xl sm:text-6xl lg:text-7xl font-light leading-[1.05] tracking-tight"
+          class="font-display text-6xl sm:text-7xl lg:text-8xl font-medium leading-[0.95] tracking-tight"
+          style="font-optical-sizing: auto;"
         >
           Ayden Salazar
         </h1>
         <p
-          class="mt-8 max-w-md text-lg sm:text-xl text-stone-700 leading-relaxed"
+          class="mt-8 text-lg sm:text-xl text-ink-soft leading-relaxed"
         >
-          Hi, I'm Ayden, an engineer based in San Francisco. By day I work in
-          tech, and the rest of my time I spend making short films.
+          Hi, I&rsquo;m Ayden, an engineer based in San Francisco. By day I work
+          in tech, and the rest of my time I spend making short films.
         </p>
+
+        <ul class="mt-10 space-y-3.5 text-base sm:text-lg">
+          <li>
+            <a
+              href="mailto:asalazar24@berkeley.edu"
+              class={`${linkClass} group inline-flex items-center gap-3 no-underline hover:no-underline`}
+            >
+              <svg
+                class="h-[18px] w-[18px] shrink-0 text-ink-dim transition-colors group-hover:text-glow"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              <span
+                class="underline decoration-ink-dim/60 underline-offset-4 group-hover:decoration-glow"
+              >
+                asalazar24 [at] berkeley [dot] edu
+              </span>
+            </a>
+          </li>
+
+          <li class="flex items-center gap-3 text-ink-soft">
+            <svg
+              class="h-[18px] w-[18px] shrink-0 text-ink-dim"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="2" y="7" width="20" height="14" rx="2" />
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+            </svg>
+            <span>Senior Solution Engineer @ Salesforce</span>
+          </li>
+
+          <li>
+            <a
+              href="https://www.linkedin.com/in/ayden-salazar-27b576198/"
+              rel="noopener"
+              class={`${linkClass} group inline-flex items-center gap-3 no-underline hover:no-underline`}
+            >
+              <svg
+                class="h-[18px] w-[18px] shrink-0 text-ink-dim transition-colors group-hover:text-glow"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"
+                />
+              </svg>
+              <span
+                class="underline decoration-ink-dim/60 underline-offset-4 group-hover:decoration-glow"
+              >
+                LinkedIn
+              </span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://github.com/aydensalazar"
+              rel="noopener"
+              class={`${linkClass} group inline-flex items-center gap-3 no-underline hover:no-underline`}
+            >
+              <svg
+                class="h-[18px] w-[18px] shrink-0 text-ink-dim transition-colors group-hover:text-glow"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.58v-2.18c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.34-1.76-1.34-1.76-1.08-.75.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .3"
+                />
+              </svg>
+              <span
+                class="underline decoration-ink-dim/60 underline-offset-4 group-hover:decoration-glow"
+              >
+                GitHub
+              </span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://drive.google.com/file/d/1g03Ca_mnctVzrAW5HV9vIbgoxYXDSmpE/view?usp=sharing"
+              rel="noopener"
+              class={`${linkClass} group inline-flex items-center gap-3 no-underline hover:no-underline`}
+            >
+              <svg
+                class="h-[18px] w-[18px] shrink-0 text-ink-dim transition-colors group-hover:text-glow"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <path d="M14 2v6h6" />
+                <path d="M8 13h8" />
+                <path d="M8 17h8" />
+              </svg>
+              <span
+                class="underline decoration-ink-dim/60 underline-offset-4 group-hover:decoration-glow"
+              >
+                Resume
+              </span>
+            </a>
+          </li>
+        </ul>
       </div>
+
       <div>
         <img
-          src="/img/AydenSalazar-UCBerkeleyGrad-60.jpg"
-          alt="Ayden Salazar standing on the UC Berkeley campus in front of the Campanile"
-          width="2000"
-          height="3000"
-          class="w-full h-auto rounded-sm shadow-sm"
+          src="/img/ayden-hero.png"
+          alt="Ayden Salazar at golden hour, wearing a tan Carhartt jacket, sitting in a park"
+          width="1024"
+          height="682"
+          class="w-full h-auto aspect-[4/5] object-cover object-center rounded-sm shadow-2xl shadow-black/40"
           fetchpriority="high"
         />
       </div>
     </section>
 
     <section class="mt-24 md:mt-32 max-w-2xl">
-      <ul class="space-y-3 text-base sm:text-lg">
-        <li>
-          <a href="mailto:asalazar24@berkeley.edu" class={linkClass}>
-            asalazar24 [at] berkeley [dot] edu
-          </a>
-        </li>
-        <li class="text-stone-700">
-          Senior Solution Engineer @ Salesforce
-        </li>
-        <li class="flex flex-wrap gap-x-6 gap-y-2 pt-2">
-          <a
-            href="https://www.linkedin.com/in/ayden-salazar-27b576198/"
-            class={linkClass}
-            rel="noopener"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="https://github.com/aydensalazar"
-            class={linkClass}
-            rel="noopener"
-          >
-            GitHub
-          </a>
-          <a
-            href="https://drive.google.com/file/d/1g03Ca_mnctVzrAW5HV9vIbgoxYXDSmpE/view?usp=sharing"
-            class={linkClass}
-            rel="noopener"
-          >
-            Resume
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <section class="mt-24 md:mt-32 max-w-2xl">
       <h2
-        class="font-serif text-3xl sm:text-4xl font-light tracking-tight"
+        class="font-display text-4xl sm:text-5xl font-medium tracking-tight"
+        style="font-optical-sizing: auto;"
       >
         Films
       </h2>
-      <p
-        class="mt-5 text-base sm:text-lg text-stone-700 leading-relaxed"
-      >
+      <p class="mt-5 text-base sm:text-lg text-ink-soft leading-relaxed">
         Outside of work, I make short films &mdash; a creative outlet for the
         side of me that loves storytelling, image, and sound.
       </p>
       <p class="mt-6">
-        <a href="/films" class={linkClass + " inline-flex items-center gap-1.5"}>
+        <a
+          href="/films"
+          class={`${linkClass} inline-flex items-center gap-1.5`}
+        >
           View my films
           <span aria-hidden="true">&rarr;</span>
         </a>
