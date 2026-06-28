@@ -3,7 +3,8 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, sans-serif;
-  --font-display: "Bodoni Moda", ui-serif, "Didot", "Bodoni 72", Georgia, serif;
+  --font-display: "Anton", "Impact", "Haettenschweiler", "Arial Narrow Bold",
+    sans-serif;
 
   /* warm-dark sunset palette */
   --color-canvas: #1a1310;
