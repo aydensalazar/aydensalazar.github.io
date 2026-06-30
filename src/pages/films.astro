@@ -1,0 +1,174 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+interface Film {
+  slug: string;
+  title: string;
+  year: number;
+  description: string;
+  /**
+   * Path to the poster image in /public, e.g. "/img/films/heli.jpg".
+   * Leave as null to render the themed placeholder card instead.
+   */
+  poster: string | null;
+  /** Full YouTube URL */
+  youtube: string;
+  /**
+   * Tailwind gradient classes used for the placeholder poster.
+   * Only rendered when `poster` is null; ignored otherwise.
+   */
+  placeholderGradient: string;
+}
+
+const films: Film[] = [
+  {
+    slug: "heli",
+    title: "Heli",
+    year: 2023,
+    description:
+      "A lone driver on a desolate countryside highway is pursued and terrorized by the malevolent pilot of a helicopter.",
+    poster: null,
+    youtube: "https://www.youtube.com/watch?v=REPLACE_WITH_HELI_VIDEO_ID",
+    placeholderGradient:
+      "bg-gradient-to-br from-slate-900 via-stone-900 to-black",
+  },
+  {
+    slug: "fangs",
+    title: "Fangs",
+    year: 2024,
+    description:
+      "A lone hunter does battle with a lab-born, colossal bat in the deserts of remote New Mexico.",
+    poster: null,
+    youtube: "https://www.youtube.com/watch?v=REPLACE_WITH_FANGS_VIDEO_ID",
+    placeholderGradient:
+      "bg-gradient-to-br from-orange-950 via-amber-950 to-stone-950",
+  },
+  {
+    slug: "save-me-san-francisco",
+    title: "Save Me, San Francisco",
+    year: 2026,
+    description:
+      "A lighthearted dance rom-com set in San Francisco — a story of country boy meets city girl.",
+    poster: null,
+    youtube:
+      "https://www.youtube.com/watch?v=REPLACE_WITH_SAVE_ME_VIDEO_ID",
+    placeholderGradient:
+      "bg-gradient-to-br from-rose-900 via-orange-900 to-purple-950",
+  },
+];
+
+const backLinkClass =
+  "inline-flex items-center gap-1.5 text-sm text-ink-soft hover:text-glow-strong transition-colors";
+
+const watchLinkClass =
+  "mt-3 inline-flex items-center gap-2 text-sm text-ink-soft group-hover:text-glow-strong transition-colors";
+---
+
+<BaseLayout
+  title="Films — Ayden Salazar"
+  description="Short films written, directed, and produced by Ayden Salazar."
+>
+  <main
+    id="main"
+    class="mx-auto max-w-6xl px-6 pt-8 pb-20 sm:pt-10 sm:pb-24 md:px-10 md:pt-12 md:pb-32"
+  >
+    <nav class="mb-14 sm:mb-20">
+      <a href="/" class={backLinkClass}>
+        <span aria-hidden="true">&larr;</span>
+        Ayden Salazar
+      </a>
+    </nav>
+
+    <header class="max-w-2xl">
+      <h1
+        class="font-display text-6xl sm:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight"
+      >
+        Films
+      </h1>
+      <p class="mt-8 text-lg sm:text-xl text-ink-soft leading-relaxed">
+        A small collection of short films I&rsquo;ve made on the side &mdash;
+        each one a chance to play with story, image, and sound.
+      </p>
+    </header>
+
+    <section
+      class="mt-16 sm:mt-20 grid gap-8 sm:gap-10 sm:grid-cols-2 lg:grid-cols-3"
+      aria-label="Film catalog"
+    >
+      {
+        films.map((film) => (
+          <a
+            href={film.youtube}
+            target="_blank"
+            rel="noopener"
+            class="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-glow focus-visible:ring-offset-4 focus-visible:ring-offset-canvas rounded-md"
+            aria-label={`Watch ${film.title} (${film.year}) on YouTube`}
+          >
+            <div class="relative overflow-hidden rounded-sm shadow-2xl shadow-black/50 transition-all duration-300 ease-out group-hover:shadow-glow/20 group-hover:-translate-y-1">
+              {film.poster ? (
+                <img
+                  src={film.poster}
+                  alt={`Poster for ${film.title}`}
+                  width="1000"
+                  height="1500"
+                  class="aspect-[2/3] w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  loading="lazy"
+                />
+              ) : (
+                <div
+                  class={`aspect-[2/3] w-full flex flex-col items-center justify-center p-6 text-center transition-transform duration-500 ease-out group-hover:scale-[1.03] ${film.placeholderGradient}`}
+                >
+                  <h2 class="font-display text-3xl sm:text-4xl font-bold text-ink leading-tight tracking-tight">
+                    {film.title}
+                  </h2>
+                  <p class="mt-3 text-xs uppercase tracking-[0.2em] text-ink-soft/70">
+                    {film.year}
+                  </p>
+                  <p class="mt-auto text-[10px] uppercase tracking-[0.2em] text-ink-dim/60">
+                    Poster placeholder
+                  </p>
+                </div>
+              )}
+
+              <div class="pointer-events-none absolute inset-0 flex items-center justify-center bg-canvas/0 opacity-0 transition-all duration-300 group-hover:bg-canvas/30 group-hover:opacity-100">
+                <span class="flex h-14 w-14 items-center justify-center rounded-full bg-canvas/80 backdrop-blur-sm ring-1 ring-ink/20">
+                  <svg
+                    class="ml-1 h-6 w-6 text-ink"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <h3 class="font-display text-xl font-bold text-ink tracking-tight">
+                {film.title}
+                <span class="ml-1 font-normal text-ink-dim">
+                  &middot; {film.year}
+                </span>
+              </h3>
+              <p class="mt-2 text-sm sm:text-base text-ink-soft leading-relaxed">
+                {film.description}
+              </p>
+              <p class={watchLinkClass}>
+                <svg
+                  class="h-3.5 w-3.5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Watch on YouTube
+              </p>
+            </div>
+          </a>
+        ))
+      }
+    </section>
+  </main>
+</BaseLayout>
