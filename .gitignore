@@ -20,5 +20,11 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# local working folder for film assets (originals; web copies live in public/img/films/)
+film pics/
+
 # jetbrains setting folder
 .idea/
+
+# local-only screenshot dumps produced by scripts/screenshot.mjs (heavy PNGs)
+.reference/
