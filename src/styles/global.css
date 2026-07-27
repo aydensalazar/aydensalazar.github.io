@@ -6,7 +6,7 @@
   --font-display: "Inter Tight", "Inter", ui-sans-serif, system-ui,
     -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  /* warm-dark sunset palette */
+  /* warm-dark sunset palette — used by the homepage. */
   --color-canvas: #1a1310;
   --color-canvas-2: #221915;
   --color-ink: #f4ead8;
@@ -14,6 +14,18 @@
   --color-ink-dim: #8a7d6a;
   --color-glow: #d4a373;
   --color-glow-strong: #e8b783;
+
+  /* streaming-platform palette — used by the films catalog + detail pages,
+     modeled closely on nfb.ca / Spotify-style dark UIs. */
+  --color-stream-bg: #0a0a0a;
+  --color-stream-surface: #181818;
+  --color-stream-surface-2: #232323;
+  --color-stream-border: #2a2a2a;
+  --color-stream-text: #ffffff;
+  --color-stream-text-soft: #d4d4d4;
+  --color-stream-text-dim: #a3a3a3;
+  --color-stream-accent: #1ed760;
+  --color-stream-accent-strong: #1fdf65;
 }
 
 @layer base {
