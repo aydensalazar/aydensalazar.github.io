@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+/**
+ * CatalogShell — the page chrome shared by every catalog page
+ * (/films, /ajvault): slim top bar, green eyebrow label, big page title,
+ * and a slot for the sections underneath.
+ */
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  heading: string;
+  backHref: string;
+  backLabel: string;
+}
+
+const { title, description, eyebrow, heading, backHref, backLabel } =
+  Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  {/* Override the warm-dark body theme so the entire page (including
+      overscroll on iOS) reads as pure NFB-style black. */}
+  <style is:global>
+    body {
+      background-color: var(--color-stream-bg);
+      color: var(--color-stream-text);
+    }
+  </style>
+
+  <main id="main" class="min-h-screen bg-stream-bg text-stream-text">
+    {/* Top utility bar — mirrors NFB's slim global header with a left-aligned
+        wordmark on the left and a back link on the right. */}
+    <header class="border-b border-stream-border/60 px-5 sm:px-8 lg:px-10">
+      <div class="flex h-14 items-center justify-between text-sm">
+        <a
+          href="/"
+          class="font-display font-semibold tracking-tight text-stream-text hover:text-stream-accent transition-colors"
+        >
+          Ayden Salazar
+        </a>
+        <a
+          href={backHref}
+          class="text-stream-text-dim hover:text-stream-text transition-colors"
+        >
+          {backLabel}
+        </a>
+      </div>
+    </header>
+
+    <div
+      class="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 pt-10 sm:pt-14 lg:pt-16 pb-24"
+    >
+      {/* Breadcrumb-style green label + large page title — matches the
+          "Subjects" / "History - Canada" stack on the NFB page exactly. */}
+      <p class="text-sm sm:text-[0.95rem] font-medium text-stream-accent">
+        {eyebrow}
+      </p>
+      <h1
+        class="mt-1.5 font-display text-3xl sm:text-4xl lg:text-[2.6rem] font-bold tracking-tight text-stream-text"
+      >
+        {heading}
+      </h1>
+
+      <slot />
+    </div>
+  </main>
+
+  {/* Hide horizontal scrollbar but keep the scroll affordance. */}
+  <style is:global>
+    .scrollbar-hide {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</BaseLayout>

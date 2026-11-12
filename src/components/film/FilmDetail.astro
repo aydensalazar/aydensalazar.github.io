@@ -1,0 +1,646 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { Film } from "../../data/films";
+
+/**
+ * FilmDetail — the cinematic detail page shared by every film collection
+ * (/films/[slug], /ajvault/[slug]). Pass the film, the sibling films used
+ * for the Suggestions row, and the URL base + back link for the collection.
+ */
+interface Props {
+  film: Film;
+  siblings: Film[];
+  basePath: string;
+  backHref: string;
+  backLabel: string;
+}
+
+const { film, siblings, basePath, backHref, backLabel } = Astro.props;
+
+const otherFilms = siblings.filter((f) => f.slug !== film.slug);
+
+const director = film.director ?? "Ayden Salazar";
+const credits = film.credits ?? [
+  { role: "Written by", name: "Ayden Salazar" },
+  { role: "Directed by", name: "Ayden Salazar" },
+  { role: "Produced by", name: "Ayden Salazar" },
+];
+
+/* Shared circular icon-button styling for the +, share, like row. */
+const circularBtn =
+  "group/icon relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-stream-surface-2 text-stream-text-soft hover:bg-stream-border hover:text-stream-text active:scale-95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-stream-accent focus-visible:ring-offset-2 focus-visible:ring-offset-stream-bg";
+
+/* Outlined secondary pill — Watch Trailer and every extra video (Bloopers,
+   Behind the Scenes, ...) share this exact style so they read as a set. */
+const secondaryPill =
+  "inline-flex items-center gap-2 rounded-full border border-stream-border bg-stream-surface/40 text-stream-text-soft text-sm font-medium uppercase tracking-wider px-4 py-2.5 hover:bg-stream-surface hover:border-stream-text-dim hover:text-stream-text active:scale-[0.98] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-stream-accent focus-visible:ring-offset-2 focus-visible:ring-offset-stream-bg";
+
+const secondaryLinks = [
+  { label: "Watch Trailer", url: film.trailerUrl },
+  ...(film.extras ?? []),
+];
+
+/* Shared anchor-nav styling — the three links in the sticky bar under the
+   hero jump to their respective sections. The inline <script> at the
+   bottom flips `data-active` via IntersectionObserver as the user scrolls
+   so the current section stays highlighted. */
+const navLinkBase =
+  "relative -mb-px py-3.5 text-sm font-medium transition-colors border-b-2 border-transparent text-stream-text-dim hover:text-stream-text data-[active=true]:text-stream-text data-[active=true]:border-stream-text focus:outline-none focus-visible:text-stream-text";
+---
+
+<BaseLayout
+  title={`${film.title} (${film.year}) — Ayden Salazar`}
+  description={film.description}
+>
+  <style is:global>
+    body {
+      background-color: var(--color-stream-bg);
+      color: var(--color-stream-text);
+    }
+  </style>
+
+  <main id="main" class="min-h-screen bg-stream-bg text-stream-text">
+    {/* Slim top utility bar — identical to the catalog page. */}
+    <header class="border-b border-stream-border/60 px-5 sm:px-8 lg:px-10">
+      <div class="flex h-14 items-center justify-between text-sm">
+        <a
+          href="/"
+          class="font-display font-semibold tracking-tight text-stream-text hover:text-stream-accent transition-colors"
+        >
+          Ayden Salazar
+        </a>
+        <a
+          href={backHref}
+          class="text-stream-text-dim hover:text-stream-text transition-colors"
+        >
+          {backLabel}
+        </a>
+      </div>
+    </header>
+
+    {/* ──────────────────────── HERO ──────────────────────── */}
+    <section class="relative">
+      {/*
+        IMAGE LAYER.
+          Mobile: full-width 16:9 banner at the top of the section, with a
+                  vertical fade into the page bg so the title sits on dark.
+          lg+   : absolutely positioned to fill the section. Section height
+                  is driven by the content column's min-height (lg:min-h-[62vh]
+                  matches NFB's roughly-60vh hero).
+      */}
+      <div
+        class="relative aspect-[16/9] w-full lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
+      >
+        <img
+          src={film.heroImage ?? film.thumbnail}
+          alt={`Still from ${film.title}`}
+          width="1920"
+          height="1080"
+          class="absolute inset-0 h-full w-full object-cover"
+          style={`object-position: ${film.heroPosition ?? "center"}`}
+          fetchpriority="high"
+        />
+
+        {/*
+          GRADIENT OVERLAYS — modeled directly off NFB's film hero:
+            • mobile     : strong vertical fade-up so the title overlays the
+                           bottom 40% of the image cleanly.
+            • lg and up  : hard horizontal fade — left ~30% of the image is
+                           fully canvas-colored so the title/description
+                           read on pure dark, then a fast dissolve to a
+                           clear image on the right.
+            • lg-only    : bottom seam fade so the hero blends into the
+                           tab area underneath with zero visible edge.
+        */}
+        <div
+          class="absolute inset-0 bg-[linear-gradient(to_top,var(--color-stream-bg)_0%,var(--color-stream-bg)_15%,transparent_70%)] lg:bg-[linear-gradient(to_right,var(--color-stream-bg)_0%,var(--color-stream-bg)_30%,transparent_75%)]"
+          aria-hidden="true"
+        >
+        </div>
+        <div
+          class="hidden lg:block absolute inset-0 bg-[linear-gradient(to_top,var(--color-stream-bg)_0%,transparent_15%,transparent_85%,rgba(10,10,10,0.5)_100%)]"
+          aria-hidden="true"
+        >
+        </div>
+      </div>
+
+      {/* CONTENT COLUMN */}
+      <div
+        class="relative mx-auto max-w-7xl px-5 sm:px-8 -mt-32 sm:-mt-40 pb-12 sm:pb-16 lg:mt-0 lg:px-10 lg:py-20 lg:min-h-[62vh] lg:flex lg:items-center"
+      >
+        <div class="max-w-[34rem] lg:max-w-[36rem]">
+          {/*
+            TITLE.
+              When the film has a bespoke title lockup PNG (white on
+              transparent) we render it in place of the plain text so
+              each detail page carries the film's own logotype. The
+              image height matches the two-line block that
+              `text-6xl leading-[1.02]` produces so the metadata / synopsis
+              / actions below sit in the same vertical position as before.
+              The `<h1>` element is preserved for semantic + a11y purposes
+              — the `alt` on the image supplies the accessible title.
+          */}
+          <h1
+            class="font-display text-[2.6rem] sm:text-5xl lg:text-[3.4rem] xl:text-6xl font-bold leading-[1.02] tracking-tight"
+          >
+            {film.titleImage ? (
+              <img
+                src={film.titleImage}
+                alt={film.title}
+                class="block h-20 sm:h-24 lg:h-28 xl:h-32 w-auto max-w-full object-contain object-left"
+              />
+            ) : (
+              film.title
+            )}
+          </h1>
+
+          {/* METADATA ROW — bullet-separated like "2000 · 50 min · Documentary"
+              followed by tiny bordered chip badges for rating, etc. */}
+          <div
+            class="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm text-stream-text-soft"
+          >
+            <span class="tabular-nums">{film.year}</span>
+            {film.runtime && (
+              <>
+                <span aria-hidden="true" class="text-stream-text-dim">
+                  &middot;
+                </span>
+                <span>{film.runtime}</span>
+              </>
+            )}
+            {film.genre && (
+              <>
+                <span aria-hidden="true" class="text-stream-text-dim">
+                  &middot;
+                </span>
+                <span>{film.genre}</span>
+              </>
+            )}
+            {film.rating && (
+              <span class="ml-1 inline-flex items-center justify-center min-w-[1.75rem] h-[1.4rem] px-1.5 text-[0.7rem] font-semibold border border-stream-text-dim/70 text-stream-text-soft rounded">
+                {film.rating}
+              </span>
+            )}
+          </div>
+
+          <p
+            class="mt-5 text-sm sm:text-[0.95rem] text-stream-text-soft leading-relaxed max-w-[34rem]"
+          >
+            {film.description}
+          </p>
+
+          {/* ACTIONS — bright green WATCH NOW pill + outlined secondary
+              pills (trailer, bloopers, behind the scenes, ...) + circular
+              icon row. */}
+          <div class="mt-7 flex flex-wrap items-center gap-3">
+            <a
+              href={film.fullFilmUrl}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-2.5 rounded-full bg-stream-accent text-black font-bold text-sm uppercase tracking-wider px-5 py-2.5 hover:bg-stream-accent-strong active:scale-[0.98] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-stream-accent focus-visible:ring-offset-2 focus-visible:ring-offset-stream-bg"
+            >
+              <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/85 text-stream-accent">
+                <svg
+                  class="ml-0.5 h-3 w-3"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M8 5v14l11-7z"></path>
+                </svg>
+              </span>
+              Watch Now
+            </a>
+
+            {/* Same pill shape as WATCH NOW, but outlined and muted so the
+                primary action stays visually dominant. A film only gets
+                the buttons it actually has links for. */}
+            {
+              secondaryLinks.map((link) => (
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener"
+                  class={secondaryPill}
+                >
+                  <svg
+                    class="h-3.5 w-3.5 -ml-0.5"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  {link.label}
+                </a>
+              ))
+            }
+
+            {/* Share — uses Web Share API, falls back to clipboard. */}
+            <button
+              type="button"
+              data-share-btn
+              title="Share"
+              aria-label="Share this film"
+              class={circularBtn}
+            >
+              <svg
+                class="h-[18px] w-[18px]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              <span
+                data-share-toast
+                class="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 transition-opacity duration-300 rounded bg-stream-surface-2 px-2 py-0.5 text-[0.7rem] font-medium text-stream-text whitespace-nowrap ring-1 ring-stream-border"
+              >
+                Copied
+              </span>
+            </button>
+
+            {/* Like — local toggle, persists in localStorage per film. */}
+            <button
+              type="button"
+              data-like-btn
+              data-film-slug={`${basePath}/${film.slug}`}
+              title="Like"
+              aria-label="Like this film"
+              aria-pressed="false"
+              class={circularBtn}
+            >
+              <svg
+                class="h-[18px] w-[18px] transition-all"
+                data-like-icon
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M7 11V21H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3zM7 11l5-9c1.6 0 3 1.4 3 3v4h6a2 2 0 0 1 2 2.3l-1.3 7a2 2 0 0 1-2 1.7H7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ──────────────────────── ANCHOR NAV + SECTIONS ────────────────────────
+        Modeled on nfb.ca/film/... — the bar under the hero isn't a tab
+        switcher, it's a set of anchor links into three sections that are
+        ALL rendered on the page. The bar sticks to the top as you scroll
+        so it's always available, and the currently-visible section stays
+        highlighted via an IntersectionObserver in the script below. */}
+    <nav
+      class="sticky top-0 z-20 bg-stream-bg/95 backdrop-blur border-b border-stream-border"
+      aria-label="Film sections"
+    >
+      <div class="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div class="flex gap-6 sm:gap-8 overflow-x-auto scrollbar-hide">
+          <a href="#suggestions" data-anchor="suggestions" class={navLinkBase}>
+            Suggestions
+          </a>
+          <a href="#details" data-anchor="details" class={navLinkBase}>
+            Details
+          </a>
+          <a href="#credits" data-anchor="credits" class={navLinkBase}>
+            Credits
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="px-5 sm:px-8 lg:px-10">
+      <div class="mx-auto max-w-7xl py-10 sm:py-14 space-y-16 sm:space-y-20">
+        {/* SUGGESTIONS — grid of the other films in this collection. */}
+        <section
+          id="suggestions"
+          aria-labelledby="section-suggestions"
+          class="scroll-mt-16 sm:scroll-mt-20"
+        >
+          <h2
+            id="section-suggestions"
+            class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-stream-text"
+          >
+            Suggestions
+          </h2>
+          <ul
+            class="mt-6 sm:mt-8 grid gap-4 sm:gap-5 lg:gap-6 grid-cols-[repeat(auto-fill,minmax(260px,1fr))]"
+          >
+            {otherFilms.map((f) => (
+              <li>
+                <a
+                  href={`${basePath}/${f.slug}`}
+                  class="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-stream-accent focus-visible:ring-offset-2 focus-visible:ring-offset-stream-bg rounded-sm"
+                >
+                  <div class="relative overflow-hidden rounded-sm bg-stream-surface">
+                    <img
+                      src={f.thumbnail}
+                      alt={`Thumbnail for ${f.title}`}
+                      width="1280"
+                      height="720"
+                      class="aspect-[16/9] w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                    <div class="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30" />
+                    <div class="pointer-events-none absolute inset-0 flex items-end justify-start p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <span class="flex h-9 w-9 items-center justify-center rounded-full bg-stream-accent text-black shadow-lg shadow-black/40">
+                        <svg
+                          class="ml-0.5 h-4 w-4"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <h3 class="text-sm font-semibold leading-snug text-stream-text">
+                      {f.title}
+                    </h3>
+                    <p class="mt-1 text-xs text-stream-text-dim">
+                      <span class="tabular-nums">{f.year}</span>
+                      {f.genre && (
+                        <>
+                          <span aria-hidden="true" class="mx-1.5">
+                            &middot;
+                          </span>
+                          <span>{f.genre}</span>
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* DETAILS — extended synopsis + structured info table. */}
+        <section
+          id="details"
+          aria-labelledby="section-details"
+          class="scroll-mt-16 sm:scroll-mt-20"
+        >
+          <h2
+            id="section-details"
+            class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-stream-text"
+          >
+            Details
+          </h2>
+          <div class="mt-6 sm:mt-8 grid gap-10 lg:grid-cols-3 lg:gap-12">
+            <div class="lg:col-span-2 max-w-2xl">
+              <h3 class="text-base font-semibold text-stream-text">
+                Synopsis
+              </h3>
+              <p class="mt-3 text-sm sm:text-[0.95rem] text-stream-text-soft leading-relaxed">
+                {film.description}
+              </p>
+            </div>
+
+            <aside>
+              <h3 class="text-xs font-semibold uppercase tracking-[0.15em] text-stream-text-dim">
+                Info
+              </h3>
+              <dl class="mt-4 space-y-3 text-sm">
+                <div class="flex justify-between gap-4 border-b border-stream-border pb-3">
+                  <dt class="text-stream-text-dim">Director</dt>
+                  <dd class="text-stream-text text-right">{director}</dd>
+                </div>
+                <div class="flex justify-between gap-4 border-b border-stream-border pb-3">
+                  <dt class="text-stream-text-dim">Year</dt>
+                  <dd class="text-stream-text text-right tabular-nums">
+                    {film.year}
+                  </dd>
+                </div>
+                {film.genre && (
+                  <div class="flex justify-between gap-4 border-b border-stream-border pb-3">
+                    <dt class="text-stream-text-dim">Genre</dt>
+                    <dd class="text-stream-text text-right">{film.genre}</dd>
+                  </div>
+                )}
+                {film.runtime && (
+                  <div class="flex justify-between gap-4 border-b border-stream-border pb-3">
+                    <dt class="text-stream-text-dim">Runtime</dt>
+                    <dd class="text-stream-text text-right">
+                      {film.runtime}
+                    </dd>
+                  </div>
+                )}
+                {film.rating && (
+                  <div class="flex justify-between gap-4 border-b border-stream-border pb-3">
+                    <dt class="text-stream-text-dim">Rating</dt>
+                    <dd class="text-stream-text text-right">{film.rating}</dd>
+                  </div>
+                )}
+              </dl>
+            </aside>
+          </div>
+        </section>
+
+        {/* CREDITS — crew rows (when provided) + "coming soon" note. */}
+        <section
+          id="credits"
+          aria-labelledby="section-credits"
+          class="scroll-mt-16 sm:scroll-mt-20"
+        >
+          <h2
+            id="section-credits"
+            class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-stream-text"
+          >
+            Credits
+          </h2>
+          <div class="mt-6 sm:mt-8 max-w-2xl">
+            {credits.length > 0 && (
+              <dl class="grid grid-cols-[10rem_1fr] gap-x-6 gap-y-3 text-sm">
+                {credits.map((c) => (
+                  <>
+                    <dt class="text-stream-text-dim">{c.role}</dt>
+                    <dd class="text-stream-text">{c.name}</dd>
+                  </>
+                ))}
+              </dl>
+            )}
+            <p
+              class:list={[
+                "text-xs text-stream-text-dim",
+                credits.length > 0 && "mt-6",
+              ]}
+            >
+              Full crew &amp; cast list coming soon.
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <style is:global>
+    .scrollbar-hide {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    /* Smooth anchor scrolling for the Suggestions/Details/Credits jump links.
+       Respect users who prefer reduced motion. */
+    html {
+      scroll-behavior: smooth;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+
+  <script>
+    // ──────────────── SECTION NAV (anchor scroll + active state) ────────────────
+    // The bar under the hero is a set of anchor links into three sections
+    // (Suggestions / Details / Credits) that are all rendered on the page.
+    // We use an IntersectionObserver to flip `data-active` on the link whose
+    // section is currently sitting in the top half of the viewport so the
+    // bar stays visually in sync with what the user is reading.
+    const navLinks = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>("[data-anchor]"),
+    );
+    const sectionIds = navLinks.map((link) => link.dataset.anchor ?? "");
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    function setActive(id: string) {
+      navLinks.forEach((link) => {
+        const isActive = link.dataset.anchor === id;
+        link.dataset.active = isActive ? "true" : "false";
+        if (isActive) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    }
+
+    if (sections.length > 0) {
+      // Default to the URL-hash target when present, otherwise the first
+      // section — prevents a "Suggestions" flash when someone deep-links
+      // to /films/<slug>#details or #credits.
+      const initialHash = window.location.hash?.slice(1) ?? "";
+      const initialId = sectionIds.includes(initialHash)
+        ? initialHash
+        : sections[0].id;
+      setActive(initialId);
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          // Prefer the top-most intersecting section — matches NFB's feel
+          // where the bar highlights whichever section is currently under
+          // the sticky nav, not whichever crosses first.
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort(
+              (a, b) =>
+                a.boundingClientRect.top - b.boundingClientRect.top,
+            );
+          if (visible[0]) setActive(visible[0].target.id);
+        },
+        {
+          // Trigger when a section enters the top 40% of the viewport so
+          // the highlight tracks reading position rather than page bottom.
+          rootMargin: "-15% 0px -55% 0px",
+          threshold: 0,
+        },
+      );
+      sections.forEach((section) => observer.observe(section));
+    }
+
+    // ──────────────── SHARE ────────────────
+    const shareBtn = document.querySelector<HTMLButtonElement>(
+      "[data-share-btn]",
+    );
+    if (shareBtn) {
+      const toast = shareBtn.querySelector<HTMLElement>("[data-share-toast]");
+      shareBtn.addEventListener("click", async () => {
+        const url = window.location.href;
+        const title = document.title;
+        if (
+          (
+            navigator as Navigator & {
+              share?: (data: ShareData) => Promise<void>;
+            }
+          ).share
+        ) {
+          try {
+            await navigator.share({ title, url });
+            return;
+          } catch {
+            /* user cancelled — fall through to copy */
+          }
+        }
+        try {
+          await navigator.clipboard.writeText(url);
+          if (toast) {
+            toast.style.opacity = "1";
+            window.setTimeout(() => {
+              toast.style.opacity = "0";
+            }, 1800);
+          }
+        } catch {
+          /* no clipboard access — silent fail */
+        }
+      });
+    }
+
+    // ──────────────── LIKE ────────────────
+    const likeBtn = document.querySelector<HTMLButtonElement>(
+      "[data-like-btn]",
+    );
+    if (likeBtn) {
+      const slug = likeBtn.dataset.filmSlug;
+      // Legacy key format for main films was `ayden-film-liked:<slug>`; the
+      // slug now carries the collection path ("/films/heli"), so strip the
+      // "/films/" prefix to keep previously saved likes working.
+      const legacySlug = slug?.startsWith("/films/")
+        ? slug.slice("/films/".length)
+        : slug;
+      const storageKey = `ayden-film-liked:${legacySlug}`;
+      const icon = likeBtn.querySelector<SVGElement>("[data-like-icon]");
+
+      const setLiked = (liked: boolean) => {
+        likeBtn.setAttribute("aria-pressed", liked ? "true" : "false");
+        likeBtn.classList.toggle("text-stream-accent", liked);
+        if (icon) icon.setAttribute("fill", liked ? "currentColor" : "none");
+      };
+
+      try {
+        if (slug && localStorage.getItem(storageKey) === "true") {
+          setLiked(true);
+        }
+      } catch {
+        /* localStorage not available */
+      }
+
+      likeBtn.addEventListener("click", () => {
+        const liked = likeBtn.getAttribute("aria-pressed") !== "true";
+        setLiked(liked);
+        try {
+          if (slug) localStorage.setItem(storageKey, String(liked));
+        } catch {
+          /* no localStorage — in-memory toggle only */
+        }
+      });
+    }
+  </script>
+</BaseLayout>

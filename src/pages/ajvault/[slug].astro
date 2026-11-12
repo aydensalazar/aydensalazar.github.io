@@ -1,0 +1,26 @@
+---
+import FilmDetail from "../../components/film/FilmDetail.astro";
+import type { Film } from "../../data/films";
+import { ajVaultFilms } from "../../data/ajvault";
+
+export function getStaticPaths() {
+  return ajVaultFilms.map((film) => ({
+    params: { slug: film.slug },
+    props: { film },
+  }));
+}
+
+interface Props {
+  film: Film;
+}
+
+const { film } = Astro.props;
+---
+
+<FilmDetail
+  film={film}
+  siblings={ajVaultFilms}
+  basePath="/ajvault"
+  backHref="/ajvault"
+  backLabel="← AJ’s Vault"
+/>

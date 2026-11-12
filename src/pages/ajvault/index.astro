@@ -1,0 +1,24 @@
+---
+import CatalogShell from "../../components/film/CatalogShell.astro";
+import FilmGrid from "../../components/film/FilmGrid.astro";
+import { ajVaultFilms } from "../../data/ajvault";
+
+const items = ajVaultFilms.map((film) => ({
+  href: `/ajvault/${film.slug}`,
+  title: film.title,
+  thumbnail: film.thumbnail,
+  meta: String(film.year),
+  ariaLabel: `See more about ${film.title} (${film.year})`,
+}));
+---
+
+<CatalogShell
+  title="AJ’s Vault — Ayden Salazar"
+  description="A directory of childhood short films by Ayden Salazar."
+  eyebrow="Films"
+  heading="AJ’s Vault"
+  backHref="/films"
+  backLabel="← Films"
+>
+  <FilmGrid id="section-vault-films" heading="Childhood Films" items={items} />
+</CatalogShell>

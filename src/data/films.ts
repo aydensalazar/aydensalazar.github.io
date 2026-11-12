@@ -16,6 +16,13 @@ export interface Film {
    */
   heroImage?: string;
   /**
+   * Optional CSS `object-position` for the hero image (default "center").
+   * The desktop hero is a wide band, so for uncropped frames this picks
+   * which vertical slice stays visible, e.g. "50% 20%" keeps faces that
+   * sit high in the frame.
+   */
+  heroPosition?: string;
+  /**
    * Optional white-on-transparent title lockup for the detail page hero.
    * When set it replaces the generic `<h1>{title}</h1>` so each film's
    * own logotype (script for "Save Me, San Francisco", block sans for
@@ -33,6 +40,26 @@ export interface Film {
   genre?: string;
   /** Optional rating shown in the detail page metadata row (e.g. "NR", "PG-13"). */
   rating?: string;
+  /**
+   * Optional extra videos (bloopers, behind the scenes, ...). Each one
+   * renders as a pill button next to "Watch Trailer", styled identically.
+   * Films without extras simply get no extra buttons.
+   */
+  extras?: FilmExtra[];
+  /** Director shown in the Details info table. Defaults to "Ayden Salazar". */
+  director?: string;
+  /**
+   * Credits rows. Defaults to Written / Directed / Produced by Ayden
+   * Salazar; pass `[]` to show only the "coming soon" note.
+   */
+  credits?: { role: string; name: string }[];
+}
+
+export interface FilmExtra {
+  /** Full button label, e.g. "Watch Bloopers". */
+  label: string;
+  /** Full YouTube URL. */
+  url: string;
 }
 
 /**

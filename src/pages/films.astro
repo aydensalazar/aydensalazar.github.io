@@ -1,158 +1,39 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import CatalogShell from "../components/film/CatalogShell.astro";
+import FilmGrid from "../components/film/FilmGrid.astro";
 import { films } from "../data/films";
+import { ajVaultCard } from "../data/ajvault";
+
+const filmItems = films.map((film) => ({
+  href: `/films/${film.slug}`,
+  title: film.title,
+  thumbnail: film.thumbnail,
+  meta: [film.year, film.genre].filter(Boolean).join(" \u00b7 "),
+  ariaLabel: `See more about ${film.title} (${film.year})`,
+}));
 ---
 
-<BaseLayout
+<CatalogShell
   title="Films — Ayden Salazar"
   description="Short films written, directed, and produced by Ayden Salazar."
+  eyebrow="Portfolio"
+  heading="Films"
+  backHref="/"
+  backLabel="Home"
 >
-  {/* Override the warm-dark body theme so the entire page (including
-      overscroll on iOS) reads as pure NFB-style black. */}
-  <style is:global>
-    body {
-      background-color: var(--color-stream-bg);
-      color: var(--color-stream-text);
-    }
-  </style>
+  <FilmGrid id="section-short-films" heading="Short Films" items={filmItems} />
 
-  <main
-    id="main"
-    class="min-h-screen bg-stream-bg text-stream-text"
-  >
-    {/* Top utility bar — mirrors NFB's slim global header with a left-aligned
-        wordmark on the left and a back link on the right. */}
-    <header
-      class="border-b border-stream-border/60 px-5 sm:px-8 lg:px-10"
-    >
-      <div
-        class="flex h-14 items-center justify-between text-sm"
-      >
-        <a
-          href="/"
-          class="font-display font-semibold tracking-tight text-stream-text hover:text-stream-accent transition-colors"
-        >
-          Ayden Salazar
-        </a>
-        <a
-          href="/"
-          class="text-stream-text-dim hover:text-stream-text transition-colors"
-        >
-          Home
-        </a>
-      </div>
-    </header>
-
-    <div class="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 pt-10 sm:pt-14 lg:pt-16 pb-24">
-      {/* Breadcrumb-style green label + large page title — matches the
-          "Subjects" / "History - Canada" stack on the NFB page exactly. */}
-      <p
-        class="text-sm sm:text-[0.95rem] font-medium text-stream-accent"
-      >
-        Portfolio
-      </p>
-      <h1
-        class="mt-1.5 font-display text-3xl sm:text-4xl lg:text-[2.6rem] font-bold tracking-tight text-stream-text"
-      >
-        Films
-      </h1>
-
-      {/* SECTION — "Short Films" row of cards.
-            Mobile / tablet : horizontal snap-scroll row, fixed card widths.
-            lg+             : 3-column grid that fills the page width so
-                              the cards take up most of the screen. */}
-      <section class="mt-12 sm:mt-16" aria-labelledby="section-short-films">
-        <h2
-          id="section-short-films"
-          class="font-display text-xl sm:text-2xl font-bold tracking-tight text-stream-text"
-        >
-          Short Films
-        </h2>
-
-        <div
-          class="mt-5 sm:mt-6 -mx-5 sm:-mx-8 lg:mx-0 px-5 sm:px-8 lg:px-0 overflow-x-auto lg:overflow-visible scrollbar-hide"
-        >
-          <ul
-            class="flex gap-4 sm:gap-5 snap-x snap-mandatory lg:grid lg:grid-cols-3 lg:gap-6 xl:gap-8 lg:snap-none"
-          >
-            {
-              films.map((film) => (
-                <li class="snap-start shrink-0 w-[280px] sm:w-[320px] md:w-[360px] lg:w-auto lg:shrink">
-                  <a
-                    href={`/films/${film.slug}`}
-                    class="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-stream-accent focus-visible:ring-offset-2 focus-visible:ring-offset-stream-bg rounded-sm"
-                    aria-label={`See more about ${film.title} (${film.year})`}
-                  >
-                    {/* Thumbnail. NFB uses no/very subtle rounding; I'm using
-                        rounded-sm for a hair of softness. */}
-                    <div class="relative overflow-hidden rounded-sm bg-stream-surface">
-                      <img
-                        src={film.thumbnail}
-                        alt={`Thumbnail for ${film.title}`}
-                        width="1280"
-                        height="720"
-                        class="aspect-[16/9] w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                        loading="lazy"
-                      />
-
-                      {/* Subtle dark wash on hover so the play icon reads
-                          cleanly on any kind of frame. */}
-                      <div class="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30" />
-
-                      {/* Play overlay — appears on hover, exactly mirroring
-                          the small green circular play icon on the NFB
-                          "Terra Nova" card in the reference screenshot. */}
-                      <div class="pointer-events-none absolute inset-0 flex items-end justify-start p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-stream-accent text-black shadow-lg shadow-black/40">
-                          <svg
-                            class="ml-0.5 h-4 w-4"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Card meta — minimal in the resting state (just the
-                        title, like NFB), expands on hover to add year +
-                        genre row underneath. */}
-                    <div class="mt-3">
-                      <h3 class="text-sm sm:text-[0.95rem] font-semibold leading-snug text-stream-text">
-                        {film.title}
-                      </h3>
-                      <p class="mt-1 max-h-0 overflow-hidden text-xs text-stream-text-dim opacity-0 transition-all duration-300 group-hover:max-h-12 group-hover:opacity-100">
-                        <span class="tabular-nums">{film.year}</span>
-                        {film.genre && (
-                          <>
-                            <span aria-hidden="true" class="mx-1.5">
-                              &middot;
-                            </span>
-                            <span>{film.genre}</span>
-                          </>
-                        )}
-                      </p>
-                    </div>
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  {/* Hide horizontal scrollbar but keep the scroll affordance. */}
-  <style is:global>
-    .scrollbar-hide {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
-  </style>
-</BaseLayout>
+  <FilmGrid
+    id="section-aj-vault"
+    heading={ajVaultCard.title}
+    items={[
+      {
+        href: ajVaultCard.href,
+        title: ajVaultCard.title,
+        thumbnail: ajVaultCard.thumbnail,
+        meta: ajVaultCard.meta,
+        ariaLabel: `Open ${ajVaultCard.title}, a directory of childhood films`,
+      },
+    ]}
+  />
+</CatalogShell>

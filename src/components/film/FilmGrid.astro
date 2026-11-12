@@ -1,0 +1,102 @@
+---
+/**
+ * FilmGrid — one titled row of catalog cards.
+ *
+ * Mobile / tablet : horizontal snap-scroll row, fixed card widths.
+ * lg+             : 3-column grid that fills the page width so the cards
+ *                   take up most of the screen.
+ *
+ * Used for "Short Films" and "AJ's Vault" on /films, and the film list on
+ * /ajvault, so every catalog card looks identical.
+ */
+export interface GridItem {
+  href: string;
+  title: string;
+  thumbnail: string;
+  /** Small line revealed on hover, e.g. "2014 · Thriller". */
+  meta?: string;
+  ariaLabel?: string;
+}
+
+interface Props {
+  id: string;
+  heading: string;
+  items: GridItem[];
+}
+
+const { id, heading, items } = Astro.props;
+---
+
+<section class="mt-12 sm:mt-16" aria-labelledby={id}>
+  <h2
+    id={id}
+    class="font-display text-xl sm:text-2xl font-bold tracking-tight text-stream-text"
+  >
+    {heading}
+  </h2>
+
+  <div
+    class="mt-5 sm:mt-6 -mx-5 sm:-mx-8 lg:mx-0 px-5 sm:px-8 lg:px-0 overflow-x-auto lg:overflow-visible scrollbar-hide"
+  >
+    <ul
+      class="flex gap-4 sm:gap-5 snap-x snap-mandatory lg:grid lg:grid-cols-3 lg:gap-6 xl:gap-8 lg:snap-none"
+    >
+      {
+        items.map((item) => (
+          <li class="snap-start shrink-0 w-[280px] sm:w-[320px] md:w-[360px] lg:w-auto lg:shrink">
+            <a
+              href={item.href}
+              class="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-stream-accent focus-visible:ring-offset-2 focus-visible:ring-offset-stream-bg rounded-sm"
+              aria-label={item.ariaLabel ?? `See more about ${item.title}`}
+            >
+              {/* Thumbnail. NFB uses no/very subtle rounding; I'm using
+                  rounded-sm for a hair of softness. */}
+              <div class="relative overflow-hidden rounded-sm bg-stream-surface">
+                <img
+                  src={item.thumbnail}
+                  alt={`Thumbnail for ${item.title}`}
+                  width="1280"
+                  height="720"
+                  class="aspect-[16/9] w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  loading="lazy"
+                />
+
+                {/* Subtle dark wash on hover so the play icon reads
+                    cleanly on any kind of frame. */}
+                <div class="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30" />
+
+                {/* Play overlay — appears on hover, mirroring the small
+                    green circular play icon on the NFB card. */}
+                <div class="pointer-events-none absolute inset-0 flex items-end justify-start p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-stream-accent text-black shadow-lg shadow-black/40">
+                    <svg
+                      class="ml-0.5 h-4 w-4"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              {/* Card meta — minimal in the resting state (just the title,
+                  like NFB), expands on hover to add the meta line. */}
+              <div class="mt-3">
+                <h3 class="text-sm sm:text-[0.95rem] font-semibold leading-snug text-stream-text">
+                  {item.title}
+                </h3>
+                {item.meta && (
+                  <p class="mt-1 max-h-0 overflow-hidden text-xs text-stream-text-dim opacity-0 transition-all duration-300 group-hover:max-h-12 group-hover:opacity-100 tabular-nums">
+                    {item.meta}
+                  </p>
+                )}
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
