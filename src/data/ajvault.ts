@@ -17,10 +17,33 @@ import type { Film } from "./films";
  *     on-screen text cards ("captured and sent to a secret compound!",
  *     "Led by an undercover Nazi, the prisoners breakout!").
  *   • The Destroyer 2 — YouTube auto-captions (partial).
+ *   • Miracle Mile — your YouTube description + a local whisper.cpp
+ *     transcript of the full film (no YouTube captions existed yet).
+ *   • Warbirds — local whisper.cpp transcript + the film's opening text
+ *     card ("Our heros have left behind the ruins of Fort Erie...").
+ *     NB: the YouTube upload is titled "Warbird - Episode #2: Exile".
  * Review and reword freely.
  */
 
 export const ajVaultFilms: Film[] = [
+  {
+    slug: "miracle-mile",
+    title: "Miracle Mile",
+    year: 2016,
+    description:
+      "A biopic of Roger Bannister, the first man to run a sub-four-minute mile. A medical student torn between neurology research and his dream of running, Bannister trades the lab for the track and, with coach Franz Stampfl and pacers Chris Brasher and Chris Chataway, chases a barrier no one had ever broken.",
+    thumbnail: "/img/ajvault/miracle-mile-thumbnail.png",
+    poster: "/img/ajvault/miracle-mile-thumbnail.png",
+    heroImage: "/img/ajvault/miracle-mile-hero.jpg",
+    heroPosition: "50% 40%",
+    titleImage: "/img/ajvault/miracle-mile-title.png",
+    fullFilmUrl: "https://youtu.be/aJuYECQ7LPA",
+    extras: [{ label: "Watch Bloopers", url: "https://youtu.be/tEHn6FeJhW8" }],
+    genre: "Biography",
+    runtime: "67 min",
+    director: "Ayden Salazar",
+    credits: [],
+  },
   {
     slug: "surrounded",
     title: "Surrounded",
@@ -103,6 +126,23 @@ export const ajVaultFilms: Film[] = [
     trailerUrl: "https://youtu.be/csIUtefroSo",
     fullFilmUrl: "https://youtu.be/JjQlm9D7HVk",
     genre: "Horror",
+    runtime: "8 min",
+    director: "Ayden Salazar",
+    credits: [],
+  },
+  {
+    slug: "warbirds",
+    title: "Warbirds",
+    year: 2013,
+    description:
+      "In World War II, German forces destroy Fort Erie. When a spy finds a weaker fort, an American squad storms it without waiting for the air strike.",
+    thumbnail: "/img/ajvault/warbirds-thumbnail.png",
+    poster: "/img/ajvault/warbirds-thumbnail.png",
+    heroImage: "/img/ajvault/warbirds-hero.jpg",
+    heroPosition: "50% 15%",
+    titleImage: "/img/ajvault/warbirds-title.png",
+    fullFilmUrl: "https://youtu.be/4iRLCg4UCxg",
+    genre: "War",
     runtime: "8 min",
     director: "Ayden Salazar",
     credits: [],

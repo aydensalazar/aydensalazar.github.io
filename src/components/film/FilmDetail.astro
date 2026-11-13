@@ -36,7 +36,9 @@ const secondaryPill =
   "inline-flex items-center gap-2 rounded-full border border-stream-border bg-stream-surface/40 text-stream-text-soft text-sm font-medium uppercase tracking-wider px-4 py-2.5 hover:bg-stream-surface hover:border-stream-text-dim hover:text-stream-text active:scale-[0.98] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-stream-accent focus-visible:ring-offset-2 focus-visible:ring-offset-stream-bg";
 
 const secondaryLinks = [
-  { label: "Watch Trailer", url: film.trailerUrl },
+  ...(film.trailerUrl
+    ? [{ label: "Watch Trailer", url: film.trailerUrl }]
+    : []),
   ...(film.extras ?? []),
 ];
 

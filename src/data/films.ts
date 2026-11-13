@@ -30,8 +30,8 @@ export interface Film {
    * text when omitted.
    */
   titleImage?: string;
-  /** Full YouTube URL for the trailer. */
-  trailerUrl: string;
+  /** Full YouTube URL for the trailer. Omit it and the button is hidden. */
+  trailerUrl?: string;
   /** Full YouTube URL for the complete film. */
   fullFilmUrl: string;
   /** Optional runtime label shown in the detail page metadata row (e.g. "12 min"). */
